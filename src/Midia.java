@@ -11,20 +11,22 @@ abstract class Midia {
     static List<Filme> filmes = new ArrayList<>();
     static List<Serie> series = new ArrayList<>();
 
+    // 🔎 Buscar uma mídia pelo título (parcial)
     public static void buscar(Scanner scanner) {
         System.out.print("Digite o título que deseja buscar: ");
         String busca = scanner.nextLine().toLowerCase();
+        boolean encontrado = false;
 
         System.out.println("\n🔎 Resultados da Busca:");
-        boolean encontrado = false;
 
         for (Midia m : livros) if (m.titulo.toLowerCase().contains(busca)) { System.out.println("📚 Livro: " + m.titulo); encontrado = true; }
         for (Midia m : filmes) if (m.titulo.toLowerCase().contains(busca)) { System.out.println("🎬 Filme: " + m.titulo); encontrado = true; }
         for (Midia m : series) if (m.titulo.toLowerCase().contains(busca)) { System.out.println("📺 Série: " + m.titulo); encontrado = true; }
 
-        if (!encontrado) System.out.println("Nenhuma mídia encontrada.");
+        if (!encontrado) System.out.println("❌ Nenhuma mídia encontrada.");
     }
 
+    // 📜 Listar mídias avaliadas e não avaliadas
     public static void listar() {
         Comparator<Midia> comparator = Comparator.comparingInt(m -> -m.avaliacao);
 
@@ -39,6 +41,7 @@ abstract class Midia {
         listarPorCategoria("📺 Séries Não Assistidas", series, comparator, false);
     }
 
+    // Método auxiliar para listar categorias específicas
     private static void listarPorCategoria(String titulo, List<? extends Midia> lista, Comparator<Midia> comparator, boolean avaliados) {
         System.out.println("\n" + titulo);
         lista.stream()
