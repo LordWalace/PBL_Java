@@ -1,11 +1,12 @@
-import java.util.*;
+import java.util.Scanner;
 
-class DiarioCultural {
+public class DiarioCultural {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcao;
+
         do {
-            System.out.println("Diário Cultural");
+            System.out.println("\n=== 🎥📚📺 Diário Cultural ===");
             System.out.println("1. Cadastrar Livro");
             System.out.println("2. Cadastrar Filme");
             System.out.println("3. Cadastrar Série");
@@ -20,17 +21,17 @@ class DiarioCultural {
             scanner.nextLine(); // Consumir a nova linha
 
             if (opcao == 1) {
-                Midia.cadastrar(scanner, "Livro");
+                Livro.cadastrar(scanner);
             } else if (opcao == 2) {
-                Midia.cadastrar(scanner, "Filme");
+                Filme.cadastrar(scanner);
             } else if (opcao == 3) {
-                Midia.cadastrar(scanner, "Serie");
+                Serie.cadastrar(scanner);
             } else if (opcao == 4) {
-                Midia.avaliar(scanner, "Livro");
+                Livro.avaliar(scanner);
             } else if (opcao == 5) {
-                Midia.avaliar(scanner, "Filme");
+                Filme.avaliar(scanner);
             } else if (opcao == 6) {
-                Midia.avaliar(scanner, "Serie");
+                Serie.avaliar(scanner);
             } else if (opcao == 7) {
                 Midia.buscar(scanner);
             } else if (opcao == 8) {
@@ -41,5 +42,7 @@ class DiarioCultural {
                 System.out.println("Opção inválida!");
             }
         } while (opcao != 9);
+
+        scanner.close();
     }
 }
