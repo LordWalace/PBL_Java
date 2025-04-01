@@ -1,12 +1,21 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 class Serie extends Midia {
-    public Serie(String titulo, String genero, int ano) {
+    private int temporadas;
+    private Map<Integer, Integer> episodiosPorTemporada; // Temporada -> Número de episódios
+    private Map<Integer, Integer> avaliacaoPorTemporada; // Temporada -> Nota da temporada
+
+    public Serie(String titulo, String genero, int ano, int temporadas, Map<Integer, Integer> episodios) {
         this.titulo = titulo;
         this.genero = genero;
         this.ano = ano;
         this.avaliacao = 0;
         this.consumido = false;
+        this.temporadas = temporadas;
+        this.episodiosPorTemporada = episodios;
+        this.avaliacaoPorTemporada = new HashMap<>();
     }
 
     public static void cadastrar(Scanner scanner) {
@@ -16,9 +25,19 @@ class Serie extends Midia {
         String genero = scanner.nextLine();
         System.out.print("Ano: ");
         int ano = scanner.nextInt();
+        System.out.print("Quantas temporadas essa série possui? ");
+        int temporadas = scanner.nextInt();
         scanner.nextLine();
 
-        series.add(new Serie(titulo, genero, ano));
+        Map<Integer, Integer> episodiosPorTemporada = new HashMap<>();
+        for (int i = 1; i <= temporadas; i++) {
+            System.out.print("Quantos episódios tem na temporada " + i + "? ");
+            int qtdEpisodios = scanner.nextInt();
+            episodiosPorTemporada.put(i, qtdEpisodios);
+        }
+        scanner.nextLine();
+
+        series.add(new Serie(titulo, genero, ano, temporadas, episodiosPorTemporada));
         System.out.println("📺 Série cadastrada com sucesso!");
     }
 
@@ -33,10 +52,17 @@ class Serie extends Midia {
                 scanner.nextLine();
 
                 if (serie.consumido) {
-                    System.out.print("Avaliação (1-5 estrelas): ");
-                    serie.avaliacao = scanner.nextInt();
+                    int somaNotas = 0;
+                    for (int i = 1; i <= serie.temporadas; i++) {
+                        System.out.print("Avaliação da temporada " + i + " (1-5 estrelas): ");
+                        int nota = scanner.nextInt();
+                        serie.avaliacaoPorTemporada.put(i, nota);
+                        somaNotas += nota;
+                    }
                     scanner.nextLine();
-                    System.out.println("✅ Avaliação registrada!");
+
+                    serie.avaliacao = somaNotas / serie.temporadas; // Média das temporadas
+                    System.out.println("✅ Avaliação registrada! Média da série: " + serie.avaliacao + " estrelas");
                 } else {
                     System.out.println("❌ A série precisa ser assistida antes de ser avaliada!");
                 }
