@@ -1,24 +1,55 @@
 import java.util.Scanner;
 
 public class DiarioCultural {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    public DiarioCultural() {
+        scanner = new Scanner(System.in);
+    }
+
+    public void iniciar() {
         int opcao;
 
         do {
-            System.out.println("\n=== 🎥📚📺 Diário Cultural ===");
-            System.out.println("1. Cadastrar Livro");
-            System.out.println("2. Cadastrar Filme");
-            System.out.println("3. Cadastrar Série");
-            System.out.println("4. Avaliar Livro");
-            System.out.println("5. Avaliar Filme");
-            System.out.println("6. Avaliar Série");
-            System.out.println("7. Buscar");
-            System.out.println("8. Listar");
-            System.out.println("9. Sair");
+            System.out.println("\n=== 🎥📚📺 Diário Cultural 🎥📚📺 ===");
+            System.out.println("1. Cadastrar");
+            System.out.println("2. Avaliar");
+            System.out.println("3. Buscar");
+            System.out.println("4. Listar");
+            System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine(); // Consumir a nova linha
+
+            if (opcao == 1) {
+                menuCadastro();
+            } else if (opcao == 2) {
+                menuAvaliacao();
+            } else if (opcao == 3) {
+                Midia.buscar(scanner);
+            } else if (opcao == 4) {
+                Midia.listar();
+            } else if (opcao == 5) {
+                System.out.println("Saindo...");
+            } else {
+                System.out.println("Opção inválida!");
+            }
+        } while (opcao != 5);
+
+        scanner.close();
+    }
+
+    private void menuCadastro() {
+        int opcao;
+        do {
+            System.out.println("\n--- Cadastro ---");
+            System.out.println("1. Livro");
+            System.out.println("2. Filme");
+            System.out.println("3. Série");
+            System.out.println("4. Voltar ao menu principal");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
             if (opcao == 1) {
                 Livro.cadastrar(scanner);
@@ -27,22 +58,41 @@ public class DiarioCultural {
             } else if (opcao == 3) {
                 Serie.cadastrar(scanner);
             } else if (opcao == 4) {
-                Livro.avaliar(scanner);
-            } else if (opcao == 5) {
-                Filme.avaliar(scanner);
-            } else if (opcao == 6) {
-                Serie.avaliar(scanner);
-            } else if (opcao == 7) {
-                Midia.buscar(scanner);
-            } else if (opcao == 8) {
-                Midia.listar();
-            } else if (opcao == 9) {
-                System.out.println("Saindo...");
+                System.out.println("Voltando ao menu principal...");
             } else {
                 System.out.println("Opção inválida!");
             }
-        } while (opcao != 9);
+        } while (opcao != 4);
+    }
 
-        scanner.close();
+    private void menuAvaliacao() {
+        int opcao;
+        do {
+            System.out.println("\n--- Avaliação ---");
+            System.out.println("1. Livro");
+            System.out.println("2. Filme");
+            System.out.println("3. Série");
+            System.out.println("4. Voltar ao menu principal");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            if (opcao == 1) {
+                Livro.avaliar(scanner);
+            } else if (opcao == 2) {
+                Filme.avaliar(scanner);
+            } else if (opcao == 3) {
+                Serie.avaliar(scanner);
+            } else if (opcao == 4) {
+                System.out.println("Voltando ao menu principal...");
+            } else {
+                System.out.println("Opção inválida!");
+            }
+        } while (opcao != 4);
+    }
+
+    public static void main(String[] args) {
+        DiarioCultural app = new DiarioCultural();
+        app.iniciar();
     }
 }

@@ -11,7 +11,7 @@ abstract class Midia {
     static List<Filme> filmes = new ArrayList<>();
     static List<Serie> series = new ArrayList<>();
 
-    // 🔎 Buscar uma mídia pelo título (parcial)
+    // 🔎 Buscar uma mídia pelo título
     public static void buscar(Scanner scanner) {
         System.out.print("Digite o título que deseja buscar: ");
         String busca = scanner.nextLine().toLowerCase();
@@ -30,7 +30,7 @@ abstract class Midia {
     public static void listar() {
         Comparator<Midia> comparator = Comparator.comparingInt(m -> -m.avaliacao);
 
-        System.out.println("\n=== ⭐ Avaliados ===");
+        System.out.println("\n=== ⭐ Avaliados ⭐ ===");
         listarPorCategoria("📚 Livros Avaliados", livros, comparator, true);
         listarPorCategoria("🎬 Filmes Avaliados", filmes, comparator, true);
         listarPorCategoria("📺 Séries Avaliadas", series, comparator, true);
