@@ -1,52 +1,25 @@
-import java.util.*;
-
-abstract class Midia {
+// Classe abstrata base para qualquer tipo de mídia
+public abstract class Midia {
     protected String titulo;
     protected String genero;
     protected int ano;
     protected int avaliacao;
-    protected boolean consumido; // Indica se foi lido/assistido
+    protected boolean consumido;
+    protected String dataConsumo;
 
-    static List<Livro> livros = new ArrayList<>();
-    static List<Filme> filmes = new ArrayList<>();
-    static List<Serie> series = new ArrayList<>();
+    public String getTitulo() { return titulo; }
+    public int getAvaliacao() { return avaliacao; }
+    public void setAvaliacao(int avaliacao) { this.avaliacao = avaliacao; }
+    public void setConsumido(boolean consumido) { this.consumido = consumido; }
+    public boolean isConsumido() { return consumido; }
+    public String getGenero() { return genero; }
+    public int getAno() { return ano; }
+    public void setDataConsumo(String dataConsumo) { this.dataConsumo = dataConsumo; }
+    public String getDataConsumo() { return dataConsumo; }
 
-    // 🔎 Buscar uma mídia pelo título
-    public static void buscar(Scanner scanner) {
-        System.out.print("Digite o título que deseja buscar: ");
-        String busca = scanner.nextLine().toLowerCase();
-        boolean encontrado = false;
-
-        System.out.println("\n🔎 Resultados da Busca:");
-
-        for (Midia m : livros) if (m.titulo.toLowerCase().contains(busca)) { System.out.println("📚 Livro: " + m.titulo); encontrado = true; }
-        for (Midia m : filmes) if (m.titulo.toLowerCase().contains(busca)) { System.out.println("🎬 Filme: " + m.titulo); encontrado = true; }
-        for (Midia m : series) if (m.titulo.toLowerCase().contains(busca)) { System.out.println("📺 Série: " + m.titulo); encontrado = true; }
-
-        if (!encontrado) System.out.println("❌ Nenhuma mídia encontrada.");
-    }
-
-    // 📜 Listar mídias avaliadas e não avaliadas
-    public static void listar() {
-        Comparator<Midia> comparator = Comparator.comparingInt(m -> -m.avaliacao);
-
-        System.out.println("\n=== ⭐ Avaliados ⭐ ===");
-        listarPorCategoria("📚 Livros Avaliados", livros, comparator, true);
-        listarPorCategoria("🎬 Filmes Avaliados", filmes, comparator, true);
-        listarPorCategoria("📺 Séries Avaliadas", series, comparator, true);
-
-        System.out.println("\n=== ❌ Não Avaliados ===");
-        listarPorCategoria("📚 Livros Não Lidos", livros, comparator, false);
-        listarPorCategoria("🎬 Filmes Não Assistidos", filmes, comparator, false);
-        listarPorCategoria("📺 Séries Não Assistidas", series, comparator, false);
-    }
-
-    // Método auxiliar para listar categorias específicas
-    private static void listarPorCategoria(String titulo, List<? extends Midia> lista, Comparator<Midia> comparator, boolean avaliados) {
-        System.out.println("\n" + titulo);
-        lista.stream()
-                .filter(m -> (avaliados ? m.avaliacao > 0 : !m.consumido))
-                .sorted(comparator)
-                .forEach(m -> System.out.println(m.titulo + (avaliados ? " - " + m.avaliacao + " estrelas" : "")));
+    @Override
+    public String toString() {
+        return String.format("Título: %s | Gênero: %s | Ano: %d | Avaliação: %d | Consumido: %s | Data: %s",
+                titulo, genero, ano, avaliacao, consumido ? "Sim" : "Não", dataConsumo != null ? dataConsumo : "N/A");
     }
 }

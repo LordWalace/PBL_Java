@@ -1,81 +1,82 @@
-// Ta dando erro no JUnit tenho que ver qual versao eu estou usando
 /*
-import static org.junit.jupiter.api.Assertions.*;
+// === Testes.java ===
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Scanner;
+import static org.junit.jupiter.api.Assertions.*;
 
-class Testes {
-    private Scanner scanner;
+public class Testes {
+    private Livro livro;
+    private Filme filme;
+    private Serie serie;
 
     @BeforeEach
-    void setUp() {
-        scanner = new Scanner(System.in);
-        Midia.livros.clear();
-        Midia.filmes.clear();
-        Midia.series.clear();
+    public void setUp() {
+        livro = new Livro("1984", "George Orwell", "Companhia das Letras", "978-0451524935", 1949, "Distopia", true);
+        filme = new Filme("Inception", "Sci-Fi", 2010, "Christopher Nolan", "Christopher Nolan", "Leonardo DiCaprio, Joseph Gordon-Levitt", "Netflix", "Inception");
+        serie = new Serie("Breaking Bad", "Drama", 2008, 1, 12, "Bryan Cranston, Aaron Paul", "Breaking Bad");
     }
 
     @Test
-    void testCadastroSerie() {
-        // Testa se uma série pode ser cadastrada corretamente
-        Serie serie = new Serie("Titulo", "Genero", 2023, "Temporada", );
-        Midia.series.add(serie);
-        assertFalse(Midia.series.isEmpty()); // Verifica se a lista de séries não está vazia
-        assertNotNull(serie.getTitulo()); // Verifica se o título foi preenchido
-        assertNotNull(serie.getGenero()); // Verifica se o gênero foi preenchido
-        assertTrue(serie.getAno() > 0); // Verifica se o ano é válido
+    public void testCadastroLivro() {
+        assertEquals("1984", livro.getTitulo());
+        assertEquals("Distopia", livro.getGenero());
+        assertEquals(1949, livro.getAno());
+        assertTrue(livro.isPossuiExemplar());
     }
 
     @Test
-    void testAvaliacaoSerie() {
-        // Testa se a avaliação da série é calculada corretamente como média das temporadas
-        Serie serie = new Serie("Titulo", "Genero", 2023);
-        serie.setAvaliacaoPorTemporada(1, 5);
-        serie.setAvaliacaoPorTemporada(2, 4);
-        assertEquals(4, serie.calcularMediaAvaliacao()); // A média deve ser (5 + 4) / 2 = 4
-    }
-
-    @Test
-    void testCadastroLivro() {
-        // Testa se um livro pode ser cadastrado corretamente
-        Livro livro = new Livro("Titulo", "Autor", "Genero", 2023, "Editora", "ISBN");
-        Midia.livros.add(livro);
-        assertFalse(Midia.livros.isEmpty()); // Verifica se a lista de livros não está vazia
-        assertNotNull(livro.getTitulo()); // Verifica se o título foi preenchido
-        assertNotNull(livro.getAutor()); // Verifica se o autor foi preenchido
-        assertNotNull(livro.getGenero()); // Verifica se o gênero foi preenchido
-    }
-
-    @Test
-    void testAvaliacaoLivro() {
-        // Testa se um livro pode ser marcado como lido e avaliado corretamente
-        Livro livro = new Livro("Titulo", "Autor", "Genero", 2023, "Editora", "ISBN");
-        livro.setLido(true);
+    public void testAvaliacaoLivro() {
+        livro.setConsumido(true);
         livro.setAvaliacao(5);
-        assertTrue(livro.isLido()); // Verifica se o livro foi marcado como lido
-        assertEquals(5, livro.getAvaliacao()); // Verifica se a avaliação foi registrada corretamente
+        livro.setDataConsumo("01/01/2024");
+
+        assertTrue(livro.isConsumido());
+        assertEquals(5, livro.getAvaliacao());
+        assertEquals("01/01/2024", livro.getDataConsumo());
     }
 
     @Test
-    void testCadastroFilme() {
-        // Testa se um filme pode ser cadastrado corretamente
-        Filme filme = new Filme("Titulo", "Genero", 2023, "Diretor");
-        Midia.filmes.add(filme);
-        assertFalse(Midia.filmes.isEmpty()); // Verifica se a lista de filmes não está vazia
-        assertNotNull(filme.getTitulo()); // Verifica se o título foi preenchido
-        assertNotNull(filme.getGenero()); // Verifica se o gênero foi preenchido
-        assertTrue(filme.getAno() > 0); // Verifica se o ano é válido
+    public void testCadastroFilme() {
+        assertEquals("Inception", filme.getTitulo());
+        assertEquals("Netflix", filme.getOndeAssistir());
+        assertEquals("Christopher Nolan", filme.getDirecao());
     }
 
     @Test
-    void testAvaliacaoFilme() {
-        // Testa se um filme pode ser marcado como assistido e avaliado corretamente
-        Filme filme = new Filme("Titulo", "Genero", 2023, "Diretor");
-        filme.setAssistido(true);
-        filme.setAvaliacao(5);
-        assertTrue(filme.isAssistido()); // Verifica se o filme foi marcado como assistido
-        assertEquals(5, filme.getAvaliacao()); // Verifica se a avaliação foi registrada corretamente
+    public void testAvaliacaoFilme() {
+        filme.setConsumido(true);
+        filme.setAvaliacao(4);
+        filme.setDataConsumo("02/02/2024");
+
+        assertTrue(filme.isConsumido());
+        assertEquals(4, filme.getAvaliacao());
+        assertEquals("02/02/2024", filme.getDataConsumo());
+    }
+
+    @Test
+    public void testCadastroSerie() {
+        assertEquals("Breaking Bad", serie.getTitulo());
+        assertEquals("Drama", serie.getGenero());
+        assertEquals(2008, serie.getAno());
+        assertEquals(2013, serie.getAnoEncerramento());
+    }
+
+    @Test
+    public void testAvaliacaoSerie() {
+        serie.adicionarTemporada(new Temporada(2008, 7));
+        serie.adicionarTemporada(new Temporada(2009, 13));
+
+        serie.getTemporadas().get(0).setAvaliacao(5);
+        serie.getTemporadas().get(1).setAvaliacao(3);
+
+        serie.setConsumido(true);
+        serie.setDataConsumo("03/03/2024");
+
+        int media = (5 + 3) / 2;
+
+        assertTrue(serie.isConsumido());
+        assertEquals(media, serie.getAvaliacao());
+        assertEquals("03/03/2024", serie.getDataConsumo());
     }
 }
 */

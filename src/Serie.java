@@ -1,74 +1,43 @@
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.HashMap;
 
-class Serie extends Midia {
+public class Serie extends Midia {
     private int temporadas;
-    private Map<Integer, Integer> episodiosPorTemporada; // Temporada -> Número de episódios
-    private Map<Integer, Integer> avaliacaoPorTemporada; // Temporada -> Nota da temporada
+    private Map<Integer, Integer> episodiosPorTemporada;
+    private Map<Integer, Integer> avaliacaoPorTemporada;
+    private List<String> elenco;
+    private String tituloOriginal;
+    private String ondeAssistir;
 
-    public Serie(String titulo, String genero, int ano, int temporadas, Map<Integer, Integer> episodios) {
+    public Serie(String titulo, String genero, int ano, int temporadas, Map<Integer, Integer> episodiosPorTemporada, List<String> elenco, String tituloOriginal, String ondeAssistir) {
         this.titulo = titulo;
         this.genero = genero;
         this.ano = ano;
+        this.temporadas = temporadas;
+        this.episodiosPorTemporada = episodiosPorTemporada;
+        this.avaliacaoPorTemporada = new HashMap<>();
+        this.elenco = elenco;
+        this.tituloOriginal = tituloOriginal;
+        this.ondeAssistir = ondeAssistir;
         this.avaliacao = 0;
         this.consumido = false;
-        this.temporadas = temporadas;
-        this.episodiosPorTemporada = episodios;
-        this.avaliacaoPorTemporada = new HashMap<>();
     }
 
-    public static void cadastrar(Scanner scanner) {
-        System.out.print("Título: ");
-        String titulo = scanner.nextLine();
-        System.out.print("Gênero: ");
-        String genero = scanner.nextLine();
-        System.out.print("Ano: ");
-        int ano = scanner.nextInt();
-        System.out.print("Quantas temporadas essa série possui? ");
-        int temporadas = scanner.nextInt();
-        scanner.nextLine();
-
-        Map<Integer, Integer> episodiosPorTemporada = new HashMap<>();
-        for (int i = 1; i <= temporadas; i++) {
-            System.out.print("Quantos episódios tem na temporada " + i + "? ");
-            int qtdEpisodios = scanner.nextInt();
-            episodiosPorTemporada.put(i, qtdEpisodios);
+    public void avaliarTemporadas(Map<Integer, Integer> avaliacoes) {
+        int soma = 0;
+        for (Map.Entry<Integer, Integer> entry : avaliacoes.entrySet()) {
+            avaliacaoPorTemporada.put(entry.getKey(), entry.getValue());
+            soma += entry.getValue();
         }
-        scanner.nextLine();
-
-        series.add(new Serie(titulo, genero, ano, temporadas, episodiosPorTemporada));
-        System.out.println("📺 Série cadastrada com sucesso!");
+        if (!avaliacoes.isEmpty()) {
+            this.avaliacao = soma / avaliacoes.size();
+        }
     }
 
-    public static void avaliar(Scanner scanner) {
-        System.out.print("Informe o título da série: ");
-        String titulo = scanner.nextLine();
-
-        for (Serie serie : series) {
-            if (serie.titulo.equalsIgnoreCase(titulo)) {
-                System.out.print("Você assistiu essa série? (true/false): ");
-                serie.consumido = scanner.nextBoolean();
-                scanner.nextLine();
-
-                if (serie.consumido) {
-                    int somaNotas = 0;
-                    for (int i = 1; i <= serie.temporadas; i++) {
-                        System.out.print("Avaliação da temporada " + i + " (1-5 estrelas): ");
-                        int nota = scanner.nextInt();
-                        serie.avaliacaoPorTemporada.put(i, nota);
-                        somaNotas += nota;
-                    }
-                    scanner.nextLine();
-
-                    serie.avaliacao = somaNotas / serie.temporadas; // Média das temporadas
-                    System.out.println("✅ Avaliação registrada! Média da série: " + serie.avaliacao + " estrelas");
-                } else {
-                    System.out.println("❌ A série precisa ser assistida antes de ser avaliada!");
-                }
-                return;
-            }
-        }
-        System.out.println("❌ Série não encontrada!");
+    @Override
+    public String toString() {
+        return super.toString() + String.format(" | Temporadas: %d | Elenco: %s | Título Original: %s | Onde Assistir: %s",
+                temporadas, elenco, tituloOriginal, ondeAssistir);
     }
 }

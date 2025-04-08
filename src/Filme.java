@@ -1,48 +1,28 @@
-import java.util.Scanner;
+import java.util.List;
 
-class Filme extends Midia {
-    public Filme(String titulo, String genero, int ano) {
+public class Filme extends Midia {
+    private String direcao;
+    private String roteiro;
+    private List<String> elenco;
+    private String tituloOriginal;
+    private String ondeAssistir;
+
+    public Filme(String titulo, String genero, int ano, String direcao, String roteiro, List<String> elenco, String tituloOriginal, String ondeAssistir) {
         this.titulo = titulo;
         this.genero = genero;
         this.ano = ano;
+        this.direcao = direcao;
+        this.roteiro = roteiro;
+        this.elenco = elenco;
+        this.tituloOriginal = tituloOriginal;
+        this.ondeAssistir = ondeAssistir;
         this.avaliacao = 0;
         this.consumido = false;
     }
 
-    public static void cadastrar(Scanner scanner) {
-        System.out.print("Título: ");
-        String titulo = scanner.nextLine();
-        System.out.print("Gênero: ");
-        String genero = scanner.nextLine();
-        System.out.print("Ano: ");
-        int ano = scanner.nextInt();
-        scanner.nextLine();
-
-        filmes.add(new Filme(titulo, genero, ano));
-        System.out.println("🎬 Filme cadastrado com sucesso!");
-    }
-
-    public static void avaliar(Scanner scanner) {
-        System.out.print("Informe o título do filme: ");
-        String titulo = scanner.nextLine();
-
-        for (Filme filme : filmes) {
-            if (filme.titulo.equalsIgnoreCase(titulo)) {
-                System.out.print("Você assistiu esse filme? (true/false): ");
-                filme.consumido = scanner.nextBoolean();
-                scanner.nextLine();
-
-                if (filme.consumido) {
-                    System.out.print("Avaliação (1-5 estrelas): ");
-                    filme.avaliacao = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.println("✅ Avaliação registrada!");
-                } else {
-                    System.out.println("❌ O filme precisa ser assistido antes de ser avaliado!");
-                }
-                return;
-            }
-        }
-        System.out.println("❌ Filme não encontrado!");
+    @Override
+    public String toString() {
+        return super.toString() + String.format(" | Direção: %s | Roteiro: %s | Elenco: %s | Título Original: %s | Onde Assistir: %s",
+                direcao, roteiro, elenco, tituloOriginal, ondeAssistir);
     }
 }

@@ -1,98 +1,82 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class DiarioCultural {
-    private final Scanner scanner;
+    private List<Livro> livros = new ArrayList<>();
+    private List<Filme> filmes = new ArrayList<>();
+    private List<Serie> series = new ArrayList<>();
 
-    public DiarioCultural() {
-        scanner = new Scanner(System.in);
+    public void cadastrarLivro(String titulo, String autor, String editora, String isbn, int ano, String genero, boolean possuiExemplar) {
+        livros.add(new Livro(titulo, autor, editora, isbn, ano, genero, possuiExemplar));
     }
 
-    public void iniciar() {
-        int opcao;
+    public void cadastrarFilme(String titulo, String genero, int ano, String direcao, String roteiro, List<String> elenco, String tituloOriginal, String ondeAssistir) {
+        filmes.add(new Filme(titulo, genero, ano, direcao, roteiro, elenco, tituloOriginal, ondeAssistir));
+    }
 
-        do {
-            System.out.println("\n=== 🎥📚📺 Diário Cultural 🎥📚📺 ===");
-            System.out.println("1. Cadastrar");
-            System.out.println("2. Avaliar");
-            System.out.println("3. Buscar");
-            System.out.println("4. Listar");
-            System.out.println("5. Sair");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a nova linha
+    public void cadastrarSerie(String titulo, String genero, int ano, int temporadas, Map<Integer, Integer> episodiosPorTemporada, List<String> elenco, String tituloOriginal, String ondeAssistir) {
+        series.add(new Serie(titulo, genero, ano, temporadas, episodiosPorTemporada, elenco, tituloOriginal, ondeAssistir));
+    }
 
-            if (opcao == 1) {
-                menuCadastro();
-            } else if (opcao == 2) {
-                menuAvaliacao();
-            } else if (opcao == 3) {
-                Midia.buscar(scanner);
-            } else if (opcao == 4) {
-                Midia.listar();
-            } else if (opcao == 5) {
-                System.out.println("Saindo...");
-            } else {
-                System.out.println("Opção inválida!");
+    public boolean avaliarLivro(String titulo, int nota, String review, String dataConsumo) {
+        for (Livro livro : livros) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                livro.setConsumido(true);
+                livro.setAvaliacao(nota);
+                livro.setReview(review);
+                livro.setDataConsumo(dataConsumo);
+                return true;
             }
-        } while (opcao != 5);
-
-        scanner.close();
+        }
+        return false;
     }
 
-    private void menuCadastro() {
-        int opcao;
-        do {
-            System.out.println("\n--- Cadastro ---");
-            System.out.println("1. Livro");
-            System.out.println("2. Filme");
-            System.out.println("3. Série");
-            System.out.println("4. Voltar ao menu principal");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine();
-
-            if (opcao == 1) {
-                Livro.cadastrar(scanner);
-            } else if (opcao == 2) {
-                Filme.cadastrar(scanner);
-            } else if (opcao == 3) {
-                Serie.cadastrar(scanner);
-            } else if (opcao == 4) {
-                System.out.println("Voltando ao menu principal...");
-            } else {
-                System.out.println("Opção inválida!");
+    public boolean avaliarFilme(String titulo, int nota, String dataConsumo) {
+        for (Filme filme : filmes) {
+            if (filme.getTitulo().equalsIgnoreCase(titulo)) {
+                filme.setConsumido(true);
+                filme.setAvaliacao(nota);
+                filme.setDataConsumo(dataConsumo);
+                return true;
             }
-        } while (opcao != 4);
+        }
+        return false;
     }
 
-    private void menuAvaliacao() {
-        int opcao;
-        do {
-            System.out.println("\n--- Avaliação ---");
-            System.out.println("1. Livro");
-            System.out.println("2. Filme");
-            System.out.println("3. Série");
-            System.out.println("4. Voltar ao menu principal");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine();
-
-            if (opcao == 1) {
-                Livro.avaliar(scanner);
-            } else if (opcao == 2) {
-                Filme.avaliar(scanner);
-            } else if (opcao == 3) {
-                Serie.avaliar(scanner);
-            } else if (opcao == 4) {
-                System.out.println("Voltando ao menu principal...");
-            } else {
-                System.out.println("Opção inválida!");
+    public boolean avaliarSerie(String titulo, Map<Integer, Integer> avaliacoesPorTemporada, String dataConsumo) {
+        for (Serie serie : series) {
+            if (serie.getTitulo().equalsIgnoreCase(titulo)) {
+                serie.setConsumido(true);
+                serie.avaliarTemporadas(avaliacoesPorTemporada);
+                serie.setDataConsumo(dataConsumo);
+                return true;
             }
-        } while (opcao != 4);
+        }
+        return false;
     }
 
-    public static void main(String[] args) {
-        DiarioCultural app = new DiarioCultural();
-        app.iniciar();
+    public void listarLivros() {
+        livros.forEach(System.out::println);
+    }
+
+    public void listarFilmes() {
+        filmes.forEach(System.out::println);
+    }
+
+    public void listarSeries() {
+        series.forEach(System.out::println);
+    }
+
+    public Livro buscarLivroPorTitulo(String titulo) {
+        return livros.stream().filter(l -> l.getTitulo().equalsIgnoreCase(titulo)).findFirst().orElse(null);
+    }
+
+    public Filme buscarFilmePorTitulo(String titulo) {
+        return filmes.stream().filter(f -> f.getTitulo().equalsIgnoreCase(titulo)).findFirst().orElse(null);
+    }
+
+    public Serie buscarSeriePorTitulo(String titulo) {
+        return series.stream().filter(s -> s.getTitulo().equalsIgnoreCase(titulo)).findFirst().orElse(null);
     }
 }
