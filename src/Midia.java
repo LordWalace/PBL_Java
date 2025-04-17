@@ -1,4 +1,4 @@
-// Classe abstrata base para qualquer tipo de mídia
+// Classe abstrata para os tres tipos de mídia
 public abstract class Midia {
     protected String titulo;
     protected String genero;
