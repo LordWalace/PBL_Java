@@ -1,4 +1,6 @@
-// === TestesIntegracaoDiarioCultural.java === "?"
+// === TestesIntegracaoDiarioCultural.java ===
+
+// Testes de Integração
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Order;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestesIntegracaoDiarioCultural{
+public class TestesIntegracaoDiarioCultural {
     private Livro livro1, livro2, livro3, livro4;
     private Filme filme1, filme2, filme3;
     private Serie serie1, serie2;
@@ -98,10 +100,11 @@ public class TestesIntegracaoDiarioCultural{
         diario.marcarComoConsumido(livro1.getTitulo(), "livro", "01/01/2024");
         diario.avaliarLivro(livro1.getTitulo(), 5, "Excelente livro!", "01/01/2024");
 
-        List<Livro> livrosOrdenados = diario.listarLivros(true, false);
-        assertFalse(livrosOrdenados.isEmpty());
-        assertEquals("1984", livrosOrdenados.get(0).getTitulo());
-        assertEquals(5, livrosOrdenados.get(0).getAvaliacao());
+        List<Livro>[] livrosSeparados = diario.listarLivros(true, false);
+        List<Livro> livrosAvaliados = livrosSeparados[0];
+        assertFalse(livrosAvaliados.isEmpty());
+        assertEquals("1984", livrosAvaliados.get(0).getTitulo());
+        assertEquals(5, livrosAvaliados.get(0).getAvaliacao());
     }
 
     @Test
@@ -176,10 +179,13 @@ public class TestesIntegracaoDiarioCultural{
         diario.marcarComoConsumido(filme1.getTitulo(), "filme", "01/02/2024");
         diario.avaliarFilme(filme1.getTitulo(), 4, "Bom filme", "01/02/2024");
 
-        List<Filme> filmesOrdenados = diario.listarFilmes(true, false);
-        assertFalse(filmesOrdenados.isEmpty());
-        assertEquals("Inception", filmesOrdenados.get(0).getTitulo());
-        assertEquals(4, filmesOrdenados.get(0).getAvaliacao());
+        List<Filme>[] resultado = diario.listarFilmes(true, false);
+        List<Filme> filmesAvaliados = resultado[0]; // Lista de filmes avaliados
+        List<Filme> filmesNaoAvaliados = resultado[1]; // Lista de filmes não avaliados (não usada neste teste)
+
+        assertFalse(filmesAvaliados.isEmpty());
+        assertEquals("Inception", filmesAvaliados.get(0).getTitulo());
+        assertEquals(4, filmesAvaliados.get(0).getAvaliacao());
     }
 
     @Test
@@ -222,10 +228,13 @@ public class TestesIntegracaoDiarioCultural{
         diario.marcarComoConsumido(serie1.getTitulo() + " - Temporada 2", "temporada", "04/03/2024");
         diario.avaliarTemporadaSerie(serie1.getTitulo(), 2, 3, "Regular", "04/03/2024");
 
-        List<Serie> seriesOrdenadas = diario.listarSeries(true, false);
-        assertFalse(seriesOrdenadas.isEmpty());
-        assertEquals("Breaking Bad", seriesOrdenadas.get(0).getTitulo());
-        assertEquals((5 + 3) / 2.0, seriesOrdenadas.get(0).getAvaliacao());
+        List<Serie>[] resultado = diario.listarSeries(true, false);
+        List<Serie> seriesAvaliadas = resultado[0]; // Lista de séries avaliadas
+        List<Serie> seriesNaoAvaliadas = resultado[1]; // Lista de séries não avaliadas (não usada neste teste)
+
+        assertFalse(seriesAvaliadas.isEmpty());
+        assertEquals("Breaking Bad", seriesAvaliadas.get(0).getTitulo());
+        assertEquals((5 + 3) / 2.0, seriesAvaliadas.get(0).getAvaliacao());
     }
 
     @Test
