@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Main-Class: com.diariocultural.view.DiarioCulturalApp
+Class-Path: javafx-fxml-21.0.1-win.jar javafx-controls-21.0.1.jar javafx
+ -graphics-21.0.1-win.jar javafx-base-21.0.1-win.jar javafx-controls-21.
+ 0.1-win.jar gson-2.10.1.jar javafx-fxml-21.0.1.jar javafx-graphics-21.0
+ .1.jar javafx-base-21.0.1.jar
+

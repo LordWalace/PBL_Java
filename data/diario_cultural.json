@@ -1,0 +1,141 @@
+{
+  "livros": [
+    {
+      "autor": "George Orwell",
+      "editora": "Companhia das Letras",
+      "isbn": "9780451524935",
+      "possuiExemplar": true,
+      "titulo": "1984",
+      "genero": "Distopia",
+      "anoLancamento": 1949,
+      "avaliacao": 1,
+      "consumido": true,
+      "review": {
+        "texto": "Livro abaixo da media!",
+        "dataCriacao": "02/07/2025"
+      }
+    },
+    {
+      "autor": "Timothy Zahn",
+      "editora": "Aleph",
+      "isbn": "978-85-7657-178-5",
+      "possuiExemplar": false,
+      "titulo": "Herdeiro do Império",
+      "genero": "Ficção Científica",
+      "anoLancamento": 2014,
+      "avaliacao": 5,
+      "consumido": true,
+      "dataConsumo": "02/07/2025",
+      "review": {
+        "texto": "Livro incrivel",
+        "dataCriacao": "02/07/2025"
+      }
+    },
+    {
+      "autor": "Antoine de Saint-Exupéry",
+      "editora": "Agir",
+      "isbn": "9788522005470",
+      "possuiExemplar": true,
+      "titulo": "O Pequeno Príncipe",
+      "genero": "Infantil",
+      "anoLancamento": 1943,
+      "avaliacao": 0,
+      "consumido": true,
+      "dataConsumo": "02/07/2025"
+    }
+  ],
+  "filmes": [
+    {
+      "tempoDeDuracao": 8880,
+      "direcao": "Christopher Nolan",
+      "roteiro": "Christopher Nolan",
+      "elenco": [
+        "Leonardo DiCaprio"
+      ],
+      "tituloOriginal": "Inception",
+      "ondeAssistir": "Netflix",
+      "titulo": "Inception",
+      "genero": "Sci-Fi",
+      "anoLancamento": 2010,
+      "avaliacao": 0,
+      "consumido": true
+    },
+    {
+      "tempoDeDuracao": 8520,
+      "direcao": "Robert Zemeckis",
+      "roteiro": "Eric Roth",
+      "elenco": [
+        "Tom Hanks"
+      ],
+      "tituloOriginal": "Forrest Gump",
+      "ondeAssistir": "Telecine Play",
+      "titulo": "Forrest Gump",
+      "genero": "Drama",
+      "anoLancamento": 1994,
+      "avaliacao": 0,
+      "consumido": false
+    }
+  ],
+  "series": [
+    {
+      "tituloOriginal": "The Mandalorian",
+      "elenco": [
+        "Pedro Pascal"
+      ],
+      "ondeAssistir": "Disney+",
+      "temporadasList": [
+        {
+          "numero": 1,
+          "anoLancamento": 2019,
+          "numeroEpisodios": 8,
+          "avaliacao": 0,
+          "consumido": false
+        }
+      ],
+      "titulo": "The Mandalorian",
+      "genero": "Sci-Fi",
+      "anoLancamento": 2019,
+      "avaliacao": 0,
+      "consumido": false
+    },
+    {
+      "tituloOriginal": "Breaking Bad",
+      "elenco": [
+        "Bryan Cranston"
+      ],
+      "ondeAssistir": "Netflix",
+      "temporadasList": [
+        {
+          "numero": 1,
+          "anoLancamento": 2008,
+          "anoEncerramento": 2008,
+          "numeroEpisodios": 7,
+          "avaliacao": 5,
+          "consumido": true,
+          "review": {
+            "texto": "Ótima",
+            "dataCriacao": "02/07/2025"
+          }
+        },
+        {
+          "numero": 2,
+          "anoLancamento": 2009,
+          "anoEncerramento": 2009,
+          "numeroEpisodios": 13,
+          "avaliacao": 3,
+          "consumido": true,
+          "review": {
+            "texto": "Regular",
+            "dataCriacao": "02/07/2025"
+          }
+        }
+      ],
+      "titulo": "Breaking Bad",
+      "genero": "Drama",
+      "anoLancamento": 2008,
+      "avaliacao": 0,
+      "consumido": true,
+      "dataConsumo": "02/07/2025"
+    }
+  ]
+}
